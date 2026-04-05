@@ -3,7 +3,6 @@ import { getMessages, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import AnnouncementBar from "@/components/layout/AnnouncementBar";
 import CartDrawer from "@/components/cart/CartDrawer";
 
 export async function generateMetadata({
@@ -38,7 +37,6 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
-      <AnnouncementBar />
       <Header locale={locale} />
       <main className="min-h-screen">{children}</main>
       <Footer locale={locale} />

@@ -12,9 +12,11 @@ const intlMiddleware = createMiddleware({
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  // Protect admin routes
-  if (pathname.includes("/admin")) {
-    const response = NextResponse.next();
+  // Always run intl middleware first to set up locale context
+  const intlResponse = intlMiddleware(request);
+
+  // Protect admin routes (except login page)
+  if (pathname.includes("/admin") && !pathname.includes("/admin/login")) {
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -25,7 +27,7 @@ export async function middleware(request: NextRequest) {
           },
           setAll(cookiesToSet) {
             cookiesToSet.forEach(({ name, value, options }) =>
-              response.cookies.set(name, value, options)
+              intlResponse.cookies.set(name, value, options)
             );
           },
         },
@@ -37,10 +39,9 @@ export async function middleware(request: NextRequest) {
       const loginUrl = new URL("/fr/admin/login", request.url);
       return NextResponse.redirect(loginUrl);
     }
-    return response;
   }
 
-  return intlMiddleware(request);
+  return intlResponse;
 }
 
 export const config = {
