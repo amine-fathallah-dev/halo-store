@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, Trash2 } from "lucide-react";
-import { createClient } from "@/lib/supabase/client";
 import { slugify } from "@/lib/utils";
+import { saveProduct } from "@/app/actions/products";
 import ImageUpload, { type UploadedImage } from "./ImageUpload";
 import Toast, { type ToastType } from "@/components/ui/Toast";
 import type { Category } from "@/types";
@@ -132,7 +132,6 @@ export default function ProductForm({
     setSaving(true);
 
     try {
-      const supabase = createClient();
       const payload = {
         name_fr: form.name_fr.trim(),
         name_en: form.name_en.trim(),
@@ -150,45 +149,21 @@ export default function ProductForm({
         is_active: form.is_active,
       };
 
-      let pid = productId;
+      const variantRows = variants.map((v) => ({
+        size: v.size,
+        color: v.color,
+        stock: v.stock,
+        sku: v.sku || `${form.slug}-${v.size}-${v.color}`.toLowerCase(),
+      }));
 
-      if (isEditing) {
-        const { error } = await supabase.from("products").update(payload).eq("id", productId);
-        if (error) throw error;
-      } else {
-        const { data, error } = await supabase.from("products").insert(payload).select().single();
-        if (error || !data) throw error;
-        pid = data.id;
-      }
+      const imgRows = images.map((img, i) => ({
+        url: img.url,
+        position: i,
+        is_cover: img.is_cover,
+      }));
 
-      // Upsert variants
-      if (isEditing) {
-        await supabase.from("product_variants").delete().eq("product_id", pid);
-      }
-      if (variants.length > 0) {
-        const variantRows = variants.map((v) => ({
-          product_id: pid,
-          size: v.size,
-          color: v.color,
-          stock: v.stock,
-          sku: v.sku || `${form.slug}-${v.size}-${v.color}`.toLowerCase(),
-        }));
-        await supabase.from("product_variants").insert(variantRows);
-      }
-
-      // Upsert images
-      if (isEditing) {
-        await supabase.from("product_images").delete().eq("product_id", pid);
-      }
-      if (images.length > 0) {
-        const imgRows = images.map((img, i) => ({
-          product_id: pid,
-          url: img.url,
-          position: i,
-          is_cover: i === 0,
-        }));
-        await supabase.from("product_images").insert(imgRows);
-      }
+      const result = await saveProduct(payload, variantRows, imgRows, productId);
+      if (result.error) throw new Error(result.error);
 
       setToast({
         message: isEditing ? "Produit modifié avec succès !" : "Produit créé avec succès !",

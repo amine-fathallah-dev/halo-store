@@ -60,9 +60,13 @@ export default function ImageUpload({ images, onChange, folder = "products" }: I
   }, [uploadFiles]);
 
   const remove = (index: number) => {
-    const updated = images
-      .filter((_, i) => i !== index)
-      .map((img, i) => ({ ...img, position: i, is_cover: i === 0 }));
+    const filtered = images.filter((_, i) => i !== index);
+    const hasCover = filtered.some((img) => img.is_cover);
+    const updated = filtered.map((img, i) => ({
+      ...img,
+      position: i,
+      is_cover: hasCover ? img.is_cover : i === 0,
+    }));
     onChange(updated);
   };
 
@@ -75,7 +79,7 @@ export default function ImageUpload({ images, onChange, folder = "products" }: I
     if (index === 0) return;
     const updated = [...images];
     [updated[index - 1], updated[index]] = [updated[index], updated[index - 1]];
-    onChange(updated.map((img, i) => ({ ...img, position: i, is_cover: i === 0 ? true : false })));
+    onChange(updated.map((img, i) => ({ ...img, position: i })));
   };
 
   return (
@@ -124,7 +128,7 @@ export default function ImageUpload({ images, onChange, folder = "products" }: I
                 img.is_cover ? "border-bronze" : "border-transparent"
               }`}
             >
-              <div className="aspect-[3/4]">
+              <div className="relative aspect-[3/4]">
                 <Image
                   src={img.url}
                   alt={`Image ${i + 1}`}

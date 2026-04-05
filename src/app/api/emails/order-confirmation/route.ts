@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
     const { orderId } = await req.json();
     if (!orderId) return NextResponse.json({ error: "Missing orderId" }, { status: 400 });
 
-    const supabase = await createAdminClient();
+    const supabase = createAdminClient();
     const { data: order } = await supabase
       .from("orders")
       .select("*, items:order_items(*)")

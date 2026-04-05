@@ -14,6 +14,7 @@ export async function middleware(request: NextRequest) {
 
   // Always run intl middleware first to set up locale context
   const intlResponse = intlMiddleware(request);
+  intlResponse.headers.set("x-pathname", pathname);
 
   // Protect admin routes (except login page)
   if (pathname.includes("/admin") && !pathname.includes("/admin/login")) {

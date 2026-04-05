@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import { createClient } from "@/lib/supabase/client";
 import { slugify } from "@/lib/utils";
+import { saveBlogPost } from "@/app/actions/blog";
 import Toast, { type ToastType } from "@/components/ui/Toast";
 import ImageUpload, { type UploadedImage } from "./ImageUpload";
 
@@ -79,7 +79,6 @@ export default function BlogForm({ locale, postId, initialData, initialCover }: 
     setSaving(true);
 
     try {
-      const supabase = createClient();
       const payload = {
         title_fr: form.title_fr.trim(),
         title_en: form.title_en.trim(),
@@ -91,13 +90,8 @@ export default function BlogForm({ locale, postId, initialData, initialCover }: 
         published_at: form.is_published ? form.published_at || new Date().toISOString() : null,
       };
 
-      if (isEditing) {
-        const { error } = await supabase.from("blog_posts").update(payload).eq("id", postId);
-        if (error) throw error;
-      } else {
-        const { error } = await supabase.from("blog_posts").insert(payload);
-        if (error) throw error;
-      }
+      const result = await saveBlogPost(payload, postId);
+      if (result.error) throw new Error(result.error);
 
       setToast({
         message: isEditing ? "Article modifié !" : "Article créé !",

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
 import { Plus, Pencil } from "lucide-react";
 import type { BlogPost } from "@/types";
 
@@ -11,7 +11,7 @@ export default async function AdminBlogPage({
 }: {
   params: { locale: string };
 }) {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
   const { data: posts } = await supabase
     .from("blog_posts")
     .select("*")

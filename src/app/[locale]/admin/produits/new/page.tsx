@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
 import ProductForm from "@/components/admin/ProductForm";
 import type { Category } from "@/types";
 
@@ -12,7 +12,7 @@ export default async function NewProductPage({
 }: {
   params: { locale: string };
 }) {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
   const { data: categories } = await supabase
     .from("categories")
     .select("*")

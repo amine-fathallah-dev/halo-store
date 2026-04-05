@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
 import { Eye } from "lucide-react";
 import type { Order, OrderStatus } from "@/types";
 import { ORDER_STATUS_LABELS } from "@/types";
@@ -23,7 +23,7 @@ export default async function AdminOrdersPage({
   params: { locale: string };
   searchParams: { status?: string; page?: string };
 }) {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
   const page = parseInt(searchParams.page ?? "1");
   const perPage = 20;
   const from = (page - 1) * perPage;

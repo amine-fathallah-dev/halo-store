@@ -1,5 +1,6 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
+import { headers } from "next/headers";
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -34,13 +35,16 @@ export default async function LocaleLayout({
   params: { locale: string };
 }) {
   const messages = await getMessages();
+  const headersList = await headers();
+  const pathname = headersList.get("x-pathname") ?? "";
+  const isAdmin = pathname.includes("/admin");
 
   return (
     <NextIntlClientProvider messages={messages} locale={locale}>
-      <Header locale={locale} />
+      {!isAdmin && <Header locale={locale} />}
       <main className="min-h-screen">{children}</main>
-      <Footer locale={locale} />
-      <CartDrawer />
+      {!isAdmin && <Footer locale={locale} />}
+      {!isAdmin && <CartDrawer />}
     </NextIntlClientProvider>
   );
 }

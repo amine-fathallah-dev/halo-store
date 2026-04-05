@@ -20,8 +20,11 @@ export default function Header({ locale }: { locale: string }) {
   const t = useTranslations("nav");
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { getTotalItems, toggleCart } = useCartStore();
-  const totalItems = getTotalItems();
+  const totalItems = mounted ? getTotalItems() : 0;
+
+  useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);

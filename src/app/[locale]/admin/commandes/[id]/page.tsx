@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
 import OrderDetailClient from "@/components/admin/OrderDetailClient";
 import type { Order } from "@/types";
 
@@ -11,7 +11,7 @@ export default async function OrderDetailPage({
 }: {
   params: { locale: string; id: string };
 }) {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   const { data: order } = await supabase
     .from("orders")

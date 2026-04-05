@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
 import { Package, ShoppingCart, Clock } from "lucide-react";
 import type { Metadata } from "next";
 import type { OrderStatus } from "@/types";
@@ -17,7 +17,7 @@ interface OrderRow {
 export const metadata: Metadata = { title: "Admin — Dashboard" };
 
 export default async function AdminDashboard() {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   const [
     { count: totalProducts },

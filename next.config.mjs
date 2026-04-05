@@ -4,6 +4,15 @@ const withNextIntl = createNextIntlPlugin("./i18n.ts");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: [
+    "@tiptap/react",
+    "@tiptap/core",
+    "@tiptap/pm",
+    "@tiptap/starter-kit",
+    "@tiptap/extension-image",
+    "@tiptap/extension-link",
+    "@tiptap/extension-placeholder",
+  ],
   images: {
     remotePatterns: [
       {

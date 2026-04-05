@@ -21,6 +21,7 @@ interface RichEditorProps {
 
 export default function RichEditor({ value, onChange, placeholder }: RichEditorProps) {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit,
       Image.configure({ inline: false, allowBase64: false }),

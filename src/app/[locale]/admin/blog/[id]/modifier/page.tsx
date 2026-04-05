@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
 import BlogForm from "@/components/admin/BlogForm";
 import type { UploadedImage } from "@/components/admin/ImageUpload";
 
@@ -13,7 +13,7 @@ export default async function EditBlogPage({
 }: {
   params: { locale: string; id: string };
 }) {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
   const { data: post } = await supabase
     .from("blog_posts")
     .select("*")
