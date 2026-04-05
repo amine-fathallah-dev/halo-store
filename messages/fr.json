@@ -1,0 +1,125 @@
+{
+  "nav": {
+    "robes": "Robes",
+    "tops": "Tops & Blouses",
+    "pantalons": "Pantalons & Jupes",
+    "vestes": "Vestes & Manteaux",
+    "accessoires": "Accessoires",
+    "soldes": "Soldes",
+    "blog": "Blog",
+    "panier": "Panier"
+  },
+  "announcement": {
+    "message1": "Livraison partout en Tunisie — 7 DT",
+    "message2": "Nouveautés chaque semaine",
+    "message3": "Soldes jusqu'à -50% — Code : HALO20"
+  },
+  "hero": {
+    "slogan": "L'élégance, réinventée",
+    "subtitle": "Collections femme & accessoires haut de gamme",
+    "cta": "Découvrir la collection"
+  },
+  "sections": {
+    "promotions": "Promotions & Soldes",
+    "promotionsLink": "Voir toutes les soldes",
+    "nouveautes": "Nouveautés",
+    "categories": "Nos Catégories",
+    "lookbook": "Lookbook"
+  },
+  "product": {
+    "addToCart": "Ajouter au panier",
+    "size": "Taille",
+    "color": "Couleur",
+    "quantity": "Quantité",
+    "outOfStock": "Rupture de stock",
+    "sizeGuide": "Guide des tailles",
+    "similar": "Vous aimerez aussi",
+    "composition": "Composition & Entretien",
+    "inStock": "En stock",
+    "selectSize": "Choisir une taille",
+    "selectColor": "Choisir une couleur"
+  },
+  "cart": {
+    "title": "Mon Panier",
+    "empty": "Votre panier est vide",
+    "emptyDesc": "Découvrez nos collections",
+    "subtotal": "Sous-total",
+    "shipping": "Livraison",
+    "shippingFee": "7 DT",
+    "total": "Total TTC",
+    "checkout": "Commander",
+    "continueShopping": "Continuer mes achats",
+    "remove": "Supprimer"
+  },
+  "checkout": {
+    "title": "Finaliser ma commande",
+    "personalInfo": "Informations personnelles",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "phone": "Téléphone",
+    "email": "Email",
+    "shippingAddress": "Adresse de livraison",
+    "governorate": "Gouvernorat",
+    "city": "Ville",
+    "address": "Adresse complète",
+    "postalCode": "Code postal",
+    "payment": "Mode de paiement",
+    "cashOnDelivery": "Cash à la livraison",
+    "cashOnDeliveryDesc": "Réglez en espèces à la réception de votre commande",
+    "summary": "Récapitulatif",
+    "confirmOrder": "Confirmer ma commande",
+    "processing": "Traitement en cours...",
+    "required": "Champ obligatoire"
+  },
+  "confirmation": {
+    "title": "Commande confirmée !",
+    "subtitle": "Merci pour votre commande",
+    "message": "Notre équipe vous contactera prochainement pour confirmer la livraison.",
+    "orderNumber": "Numéro de commande",
+    "backToShop": "Retour à la boutique"
+  },
+  "filters": {
+    "title": "Filtres",
+    "category": "Catégorie",
+    "size": "Taille",
+    "color": "Couleur",
+    "price": "Prix",
+    "promoOnly": "Promotions uniquement",
+    "sortBy": "Trier par",
+    "newest": "Nouveautés",
+    "priceLow": "Prix croissant",
+    "priceHigh": "Prix décroissant",
+    "bestSellers": "Meilleures ventes",
+    "all": "Tout",
+    "clearFilters": "Réinitialiser",
+    "results": "produit(s)"
+  },
+  "footer": {
+    "navigation": "Navigation",
+    "info": "Informations",
+    "social": "Réseaux sociaux",
+    "delivery": "Livraison en Tunisie — 7 DT — Cash à la livraison",
+    "copyright": "© 2024 HALO. Tous droits réservés.",
+    "about": "À propos",
+    "contact": "Contact",
+    "faq": "FAQ",
+    "returns": "Retours & Échanges"
+  },
+  "admin": {
+    "dashboard": "Tableau de bord",
+    "products": "Produits",
+    "orders": "Commandes",
+    "blog": "Blog",
+    "logout": "Déconnexion",
+    "login": "Connexion",
+    "email": "Email",
+    "password": "Mot de passe",
+    "loginBtn": "Se connecter"
+  },
+  "governorates": [
+    "Ariana", "Béja", "Ben Arous", "Bizerte", "Gabès", "Gafsa",
+    "Jendouba", "Kairouan", "Kasserine", "Kébili", "Le Kef", "Mahdia",
+    "La Manouba", "Médenine", "Monastir", "Nabeul", "Sfax", "Sidi Bouzid",
+    "Siliana", "Sousse", "Tataouine", "Tozeur", "Tunis", "Zaghouan"
+  ]
+}

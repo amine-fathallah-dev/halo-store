@@ -3,25 +3,113 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-background: #FAF8F5;
+  --color-beige: #E8DFD0;
+  --color-grege: #C5B9A8;
+  --color-bronze: #A07850;
+  --color-noir: #1A1A18;
+  --color-white: #FFFFFF;
+  --color-promo: #8B2E2E;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-noir);
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  input, textarea, select {
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .btn-primary {
+    @apply bg-bronze text-white font-dm text-sm tracking-widest uppercase px-8 py-4 rounded-full transition-all duration-200 hover:bg-noir cursor-pointer inline-flex items-center justify-center gap-2;
+  }
+
+  .btn-secondary {
+    @apply border border-bronze text-bronze font-dm text-sm tracking-widest uppercase px-8 py-4 rounded-full transition-all duration-200 hover:bg-bronze hover:text-white cursor-pointer inline-flex items-center justify-center gap-2;
+  }
+
+  .btn-ghost {
+    @apply text-noir font-dm text-sm tracking-widest uppercase px-4 py-2 transition-all duration-200 hover:text-bronze cursor-pointer inline-flex items-center gap-2;
+  }
+
+  .section-title {
+    @apply font-cormorant text-4xl md:text-5xl text-noir tracking-wide;
+  }
+
+  .section-subtitle {
+    @apply font-dm text-grege text-sm tracking-widest uppercase;
+  }
+
+  .product-card {
+    @apply bg-white rounded-2xl overflow-hidden shadow-warm hover:shadow-warm-md transition-all duration-300 cursor-pointer;
+  }
+
+  .input-field {
+    @apply w-full border border-beige rounded-xl px-4 py-3 font-dm text-sm text-noir bg-white focus:outline-none focus:border-bronze focus:ring-1 focus:ring-bronze transition-colors duration-200 min-h-[48px];
+  }
+
+  .badge-new {
+    @apply bg-bronze text-white text-xs font-dm tracking-widest uppercase px-2 py-1 rounded-full;
+  }
+
+  .badge-promo {
+    @apply bg-promo text-white text-xs font-dm tracking-widest uppercase px-2 py-1 rounded-full;
+  }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-grege);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-bronze);
+}
+
+/* Range input */
+input[type="range"] {
+  -webkit-appearance: none;
+  height: 2px;
+  background: var(--color-beige);
+  border-radius: 1px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--color-bronze);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

@@ -1,0 +1,125 @@
+{
+  "nav": {
+    "robes": "Dresses",
+    "tops": "Tops & Blouses",
+    "pantalons": "Pants & Skirts",
+    "vestes": "Jackets & Coats",
+    "accessoires": "Accessories",
+    "soldes": "Sale",
+    "blog": "Blog",
+    "panier": "Cart"
+  },
+  "announcement": {
+    "message1": "Delivery across Tunisia — 7 DT",
+    "message2": "New arrivals every week",
+    "message3": "Sale up to -50% — Code: HALO20"
+  },
+  "hero": {
+    "slogan": "Elegance, reinvented",
+    "subtitle": "Premium women's fashion & accessories",
+    "cta": "Discover the collection"
+  },
+  "sections": {
+    "promotions": "Promotions & Sales",
+    "promotionsLink": "See all sales",
+    "nouveautes": "New Arrivals",
+    "categories": "Our Categories",
+    "lookbook": "Lookbook"
+  },
+  "product": {
+    "addToCart": "Add to cart",
+    "size": "Size",
+    "color": "Color",
+    "quantity": "Quantity",
+    "outOfStock": "Out of stock",
+    "sizeGuide": "Size guide",
+    "similar": "You may also like",
+    "composition": "Composition & Care",
+    "inStock": "In stock",
+    "selectSize": "Select a size",
+    "selectColor": "Select a color"
+  },
+  "cart": {
+    "title": "My Cart",
+    "empty": "Your cart is empty",
+    "emptyDesc": "Discover our collections",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "shippingFee": "7 DT",
+    "total": "Total",
+    "checkout": "Checkout",
+    "continueShopping": "Continue shopping",
+    "remove": "Remove"
+  },
+  "checkout": {
+    "title": "Complete my order",
+    "personalInfo": "Personal information",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "phone": "Phone",
+    "email": "Email",
+    "shippingAddress": "Shipping address",
+    "governorate": "Governorate",
+    "city": "City",
+    "address": "Full address",
+    "postalCode": "Postal code",
+    "payment": "Payment method",
+    "cashOnDelivery": "Cash on delivery",
+    "cashOnDeliveryDesc": "Pay in cash when you receive your order",
+    "summary": "Order summary",
+    "confirmOrder": "Confirm my order",
+    "processing": "Processing...",
+    "required": "Required field"
+  },
+  "confirmation": {
+    "title": "Order confirmed!",
+    "subtitle": "Thank you for your order",
+    "message": "Our team will contact you shortly to confirm delivery.",
+    "orderNumber": "Order number",
+    "backToShop": "Back to shop"
+  },
+  "filters": {
+    "title": "Filters",
+    "category": "Category",
+    "size": "Size",
+    "color": "Color",
+    "price": "Price",
+    "promoOnly": "On sale only",
+    "sortBy": "Sort by",
+    "newest": "Newest",
+    "priceLow": "Price: low to high",
+    "priceHigh": "Price: high to low",
+    "bestSellers": "Best sellers",
+    "all": "All",
+    "clearFilters": "Clear filters",
+    "results": "product(s)"
+  },
+  "footer": {
+    "navigation": "Navigation",
+    "info": "Information",
+    "social": "Follow us",
+    "delivery": "Delivery in Tunisia — 7 DT — Cash on delivery",
+    "copyright": "© 2024 HALO. All rights reserved.",
+    "about": "About",
+    "contact": "Contact",
+    "faq": "FAQ",
+    "returns": "Returns & Exchanges"
+  },
+  "admin": {
+    "dashboard": "Dashboard",
+    "products": "Products",
+    "orders": "Orders",
+    "blog": "Blog",
+    "logout": "Logout",
+    "login": "Login",
+    "email": "Email",
+    "password": "Password",
+    "loginBtn": "Sign in"
+  },
+  "governorates": [
+    "Ariana", "Béja", "Ben Arous", "Bizerte", "Gabès", "Gafsa",
+    "Jendouba", "Kairouan", "Kasserine", "Kébili", "Le Kef", "Mahdia",
+    "La Manouba", "Médenine", "Monastir", "Nabeul", "Sfax", "Sidi Bouzid",
+    "Siliana", "Sousse", "Tataouine", "Tozeur", "Tunis", "Zaghouan"
+  ]
+}
