@@ -123,4 +123,10 @@ export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
 };
 
 export const SIZES = ["XS", "S", "M", "L", "XL", "XXL"];
-export const SHIPPING_FEE = 7;
+export const SCARF_SIZES = ["70x70 cm", "90x90 cm", "100x100 cm", "140x140 cm", "Unique"];
+export const SHIPPING_FEE = parseFloat(process.env.NEXT_PUBLIC_SHIPPING_FEE ?? "8");
+
+// Catégories sans taille (variante = couleur + stock uniquement)
+export const NO_SIZE_CATEGORY_SLUGS = ["accessoires"];
+// Catégories avec tailles foulard
+export const SCARF_CATEGORY_SLUGS = ["foulards"];

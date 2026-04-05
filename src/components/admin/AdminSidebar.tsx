@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import Image from "next/image";
 import {
   LayoutDashboard,
   Package,
@@ -64,7 +65,7 @@ export default function AdminSidebar() {
       {/* Desktop sidebar */}
       <aside className="fixed left-0 top-0 bottom-0 w-64 bg-noir text-white z-40 flex-col hidden md:flex">
         <div className="px-6 py-8 border-b border-white/10">
-          <p className="font-cormorant text-2xl tracking-[0.3em]">HALO</p>
+          <Image src="/logo.png" alt="Halo Store" width={44} height={44} className="h-11 w-11 object-cover rounded-full mb-1" />
           <p className="font-dm text-xs text-white/40 tracking-widest uppercase mt-1">Admin</p>
         </div>
         <nav className="flex-1 px-4 py-6 space-y-1">
@@ -83,7 +84,7 @@ export default function AdminSidebar() {
 
       {/* Mobile top bar */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-noir text-white flex items-center justify-between px-4 h-14">
-        <p className="font-cormorant text-xl tracking-[0.3em]">HALO</p>
+        <Image src="/logo.png" alt="Halo Store" width={36} height={36} className="h-9 w-9 object-cover rounded-full" />
         <button
           onClick={() => setMobileOpen(true)}
           className="p-2 text-white/60 hover:text-white cursor-pointer"
@@ -103,7 +104,7 @@ export default function AdminSidebar() {
           <div className="fixed top-0 left-0 bottom-0 z-50 w-72 bg-noir text-white flex flex-col md:hidden">
             <div className="px-6 py-5 border-b border-white/10 flex items-center justify-between">
               <div>
-                <p className="font-cormorant text-2xl tracking-[0.3em]">HALO</p>
+                <Image src="/logo.png" alt="Halo Store" width={40} height={40} className="h-10 w-10 object-cover rounded-full" />
                 <p className="font-dm text-xs text-white/40 tracking-widest uppercase mt-0.5">Admin</p>
               </div>
               <button

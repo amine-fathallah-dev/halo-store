@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     default: "HALO — Mode Femme & Accessoires",
     template: "%s | HALO",
   },
-  description: "Collections femme et accessoires haut de gamme. Livraison en Tunisie — 7 DT. Cash à la livraison.",
+  description: "Collections femme et accessoires haut de gamme. Livraison en Tunisie — 8 DT. Cash à la livraison.",
   keywords: ["mode femme", "vêtements tunisie", "accessoires", "robes", "halo"],
 };
 

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
-import { createClient } from "@/lib/supabase/client";
+import { updateOrderStatus, updateOrderNotes } from "@/app/actions/orders";
 import type { Order, OrderItem, OrderStatus, OrderStatusHistory } from "@/types";
 import { ORDER_STATUS_LABELS } from "@/types";
 
@@ -25,24 +25,14 @@ export default function OrderDetailClient({ order, locale }: OrderDetailClientPr
 
   const updateStatus = async (newStatus: OrderStatus) => {
     setSaving(true);
-    const supabase = createClient();
-    await supabase
-      .from("orders")
-      .update({ status: newStatus })
-      .eq("id", order.id);
-    await supabase.from("order_status_history").insert({
-      order_id: order.id,
-      status: newStatus,
-      changed_by: "admin",
-    });
-    setStatus(newStatus);
+    const result = await updateOrderStatus(order.id, newStatus);
+    if (!result.error) setStatus(newStatus);
     setSaving(false);
   };
 
   const saveNotes = async () => {
     setSaving(true);
-    const supabase = createClient();
-    await supabase.from("orders").update({ admin_notes: notes }).eq("id", order.id);
+    await updateOrderNotes(order.id, notes);
     setSaving(false);
   };
 

@@ -12,9 +12,7 @@ export default function HeroSection({ locale }: { locale: string }) {
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1920&q=80')`,
-        }}
+        style={{ backgroundImage: `url('/Hero.JPG')` }}
         role="img"
         aria-label="Collection HALO"
       />

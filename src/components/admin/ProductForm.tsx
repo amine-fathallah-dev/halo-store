@@ -8,7 +8,7 @@ import { saveProduct } from "@/app/actions/products";
 import ImageUpload, { type UploadedImage } from "./ImageUpload";
 import Toast, { type ToastType } from "@/components/ui/Toast";
 import type { Category } from "@/types";
-import { SIZES } from "@/types";
+import { SIZES, SCARF_SIZES, NO_SIZE_CATEGORY_SLUGS, SCARF_CATEGORY_SLUGS } from "@/types";
 
 interface VariantRow {
   id?: string;
@@ -103,8 +103,14 @@ export default function ProductForm({
   const toggle = (field: keyof ProductFormData) => () =>
     setForm((f) => ({ ...f, [field]: !f[field] }));
 
+  // Detect product type from selected category
+  const selectedCategory = categories.find((c) => c.id === form.category_id);
+  const isAccessoire = NO_SIZE_CATEGORY_SLUGS.includes(selectedCategory?.slug ?? "");
+  const isFoulard = SCARF_CATEGORY_SLUGS.includes(selectedCategory?.slug ?? "");
+  const availableSizes = isFoulard ? SCARF_SIZES : SIZES;
+
   const addVariant = () =>
-    setVariants((v) => [...v, { size: "S", color: "", stock: 0, sku: "" }]);
+    setVariants((v) => [...v, { size: isAccessoire ? "Unique" : availableSizes[0], color: "", stock: 0, sku: "" }]);
 
   const removeVariant = (i: number) =>
     setVariants((v) => v.filter((_, idx) => idx !== i));
@@ -391,26 +397,35 @@ export default function ProductForm({
             </button>
           </div>
 
+          {/* Type indicator */}
+          {(isAccessoire || isFoulard) && (
+            <div className="mb-4 px-3 py-2 bg-bronze/10 rounded-xl font-dm text-xs text-bronze">
+              {isAccessoire ? "Accessoire — pas de taille, une variante par couleur" : "Foulard — tailles en dimensions"}
+            </div>
+          )}
+
           <div className="space-y-3">
             {/* Header */}
-            <div className="hidden md:grid grid-cols-[120px_1fr_80px_1fr_40px] gap-3">
-              {["Taille", "Couleur", "Stock", "SKU", ""].map((h) => (
+            <div className={`hidden md:grid gap-3 ${isAccessoire ? "grid-cols-[1fr_80px_1fr_40px]" : "grid-cols-[120px_1fr_80px_1fr_40px]"}`}>
+              {(isAccessoire ? ["Couleur", "Stock", "SKU", ""] : ["Taille", "Couleur", "Stock", "SKU", ""]).map((h) => (
                 <p key={h} className="font-dm text-xs uppercase tracking-widest text-grege">{h}</p>
               ))}
             </div>
 
             {variants.map((v, i) => (
-              <div key={i} className="grid grid-cols-2 md:grid-cols-[120px_1fr_80px_1fr_40px] gap-3 items-center p-3 bg-background rounded-2xl">
+              <div key={i} className={`grid gap-3 items-center p-3 bg-background rounded-2xl ${isAccessoire ? "grid-cols-2 md:grid-cols-[1fr_80px_1fr_40px]" : "grid-cols-2 md:grid-cols-[120px_1fr_80px_1fr_40px]"}`}>
+                {!isAccessoire && (
                 <select
                   value={v.size}
                   onChange={(e) => updateVariant(i, "size", e.target.value)}
                   className="input-field py-2 text-sm"
                   aria-label="Taille"
                 >
-                  {SIZES.map((s) => (
+                  {availableSizes.map((s) => (
                     <option key={s} value={s}>{s}</option>
                   ))}
                 </select>
+                )}
                 <input
                   type="text"
                   value={v.color}

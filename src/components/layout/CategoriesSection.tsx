@@ -8,7 +8,8 @@ const CATEGORY_IMAGES: Record<string, string> = {
   tops: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=800&q=80",
   pantalons: "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=80",
   vestes: "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=800&q=80",
-  accessoires: "https://images.unsplash.com/photo-1611010344444-5f9e4d86a6d8?w=800&q=80",
+  foulards: "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=800&q=80",
+  accessoires: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80",
 };
 
 interface CategoriesSectionProps {

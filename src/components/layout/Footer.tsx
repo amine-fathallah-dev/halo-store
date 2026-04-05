@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
 const InstagramIcon = () => (
@@ -28,7 +29,15 @@ export default async function Footer({ locale }: { locale: string }) {
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-16">
         {/* Logo */}
         <div className="text-center mb-12">
-          <p className="font-cormorant text-4xl tracking-[0.4em] uppercase mb-3">HALO</p>
+          <div className="flex justify-center mb-3">
+            <Image
+              src="/logo.png"
+              alt="Halo Store"
+              width={80}
+              height={80}
+              className="h-20 w-20 object-cover rounded-full"
+            />
+          </div>
           <p className="font-dm text-grege text-xs tracking-widest uppercase">
             {t("delivery")}
           </p>
@@ -124,7 +133,7 @@ export default async function Footer({ locale }: { locale: string }) {
             <div className="mt-8 p-4 bg-white/5 rounded-2xl border border-white/10">
               <p className="font-dm text-xs text-grege mb-1 uppercase tracking-widest">Livraison</p>
               <p className="font-dm text-sm text-white">Tunisie uniquement</p>
-              <p className="font-cormorant text-2xl text-bronze mt-1">7 DT</p>
+              <p className="font-cormorant text-2xl text-bronze mt-1">8 DT</p>
               <p className="font-dm text-xs text-grege mt-1">Cash à la livraison</p>
             </div>
           </div>

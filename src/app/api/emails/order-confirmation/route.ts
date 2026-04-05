@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase/server";
 import type { OrderItem } from "@/types";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
 
 export async function POST(req: NextRequest) {
   try {
@@ -67,7 +68,7 @@ export async function POST(req: NextRequest) {
         </div>
         <div style="display:flex;justify-content:space-between;margin-bottom:12px">
           <span style="font-size:13px;color:#C5B9A8">Livraison</span>
-          <span style="font-size:13px">7.000 DT</span>
+          <span style="font-size:13px">${order.shipping_fee.toFixed(3)} DT</span>
         </div>
         <div style="display:flex;justify-content:space-between">
           <span style="font-family:Georgia,serif;font-size:20px">Total</span>
@@ -105,7 +106,7 @@ export async function POST(req: NextRequest) {
     // Send to customer
     if (order.customer_email) {
       await resend.emails.send({
-        from: "HALO <commandes@halostore.tn>",
+        from: `HALO <${FROM_EMAIL}>`,
         to: order.customer_email,
         subject: `Votre commande HALO #${order.order_number} est confirmée ✨`,
         html: clientHtml,
@@ -115,7 +116,7 @@ export async function POST(req: NextRequest) {
     // Send to admin
     if (process.env.ADMIN_EMAIL) {
       await resend.emails.send({
-        from: "HALO <commandes@halostore.tn>",
+        from: `HALO <${FROM_EMAIL}>`,
         to: process.env.ADMIN_EMAIL,
         subject: `🛍️ Nouvelle commande #${order.order_number} — ${order.customer_name}`,
         html: adminHtml,

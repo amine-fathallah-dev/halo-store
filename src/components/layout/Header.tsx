@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { ShoppingBag, Globe, Menu, X } from "lucide-react";
+import Image from "next/image";
 import { useCartStore } from "@/store/cart";
 import AnnouncementBar from "./AnnouncementBar";
 
@@ -11,7 +12,7 @@ const NAV_LINKS = [
   { key: "robes", href: "/category/robes" },
   { key: "tops", href: "/category/tops" },
   { key: "pantalons", href: "/category/pantalons" },
-  { key: "vestes", href: "/category/vestes" },
+  { key: "foulards", href: "/category/foulards" },
   { key: "accessoires", href: "/category/accessoires" },
   { key: "soldes", href: "/soldes" },
 ];
@@ -39,29 +40,32 @@ export default function Header({ locale }: { locale: string }) {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled || mobileOpen
-            ? "bg-white/95 backdrop-blur-sm border-b border-beige/60"
-            : "bg-transparent"
+            ? "bg-white/95 backdrop-blur-sm border-b border-beige/60 shadow-none"
+            : "bg-white/80 backdrop-blur-md border-b border-beige/40"
         }`}
       >
         <AnnouncementBar />
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Hamburger — mobile left */}
-            <button
-              className="md:hidden p-2 cursor-pointer text-noir hover:text-bronze transition-colors"
-              onClick={() => setMobileOpen((o) => !o)}
-              aria-label="Menu"
-            >
-              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
+        <div className="max-w-5xl mx-auto px-4 md:px-8">
+          <div className="flex items-center justify-between h-16 md:h-20 gap-4">
+            {/* Logo */}
+            <Link href={`/${locale}`} className="flex-shrink-0">
+              <Image
+                src="/logo.png"
+                alt="Halo Store"
+                width={48}
+                height={48}
+                className="h-10 w-10 md:h-12 md:w-12 object-cover rounded-full"
+                priority
+              />
+            </Link>
 
-            {/* Desktop nav left */}
-            <nav className="hidden md:flex items-center gap-6 flex-1">
-              {NAV_LINKS.slice(0, 3).map((link) => (
+            {/* Desktop nav — center */}
+            <nav className="hidden md:flex items-center gap-6 flex-1 justify-center">
+              {NAV_LINKS.map((link) => (
                 <Link
                   key={link.key}
                   href={`/${locale}${link.href}`}
-                  className={`font-dm text-xs tracking-widest uppercase transition-colors duration-200 hover:text-bronze ${
+                  className={`font-dm text-sm font-bold tracking-wider uppercase transition-colors duration-200 hover:text-bronze ${
                     link.key === "soldes" ? "text-promo" : "text-noir"
                   }`}
                 >
@@ -70,41 +74,16 @@ export default function Header({ locale }: { locale: string }) {
               ))}
             </nav>
 
-            {/* Logo center */}
-            <Link
-              href={`/${locale}`}
-              className="font-cormorant text-2xl md:text-3xl tracking-[0.3em] text-noir hover:text-bronze transition-colors duration-200 uppercase mx-auto md:mx-0"
-            >
-              HALO
-            </Link>
-
-            {/* Right side */}
-            <div className="flex items-center gap-3 flex-1 justify-end">
-              {/* Desktop nav right */}
-              <nav className="hidden md:flex items-center gap-6 mr-4">
-                {NAV_LINKS.slice(3).map((link) => (
-                  <Link
-                    key={link.key}
-                    href={`/${locale}${link.href}`}
-                    className={`font-dm text-xs tracking-widest uppercase transition-colors duration-200 hover:text-bronze ${
-                      link.key === "soldes" ? "text-promo font-medium" : "text-noir"
-                    }`}
-                  >
-                    {t(link.key as Parameters<typeof t>[0])}
-                  </Link>
-                ))}
-              </nav>
-
+            {/* Right actions */}
+            <div className="flex items-center gap-2 flex-shrink-0">
               {/* Language switcher */}
               <Link
                 href={`/${otherLocale}`}
-                className="p-2 text-noir hover:text-bronze transition-colors cursor-pointer flex items-center gap-1"
+                className="p-2 text-noir hover:text-bronze transition-colors cursor-pointer hidden md:flex items-center gap-1"
                 aria-label="Changer de langue"
               >
                 <Globe size={18} />
-                <span className="font-dm text-xs uppercase hidden sm:block">
-                  {otherLocale}
-                </span>
+                <span className="font-dm text-xs uppercase">{otherLocale}</span>
               </Link>
 
               {/* Cart */}
@@ -120,23 +99,18 @@ export default function Header({ locale }: { locale: string }) {
                   </span>
                 )}
               </button>
+
+              {/* Hamburger — mobile */}
+              <button
+                className="md:hidden p-2 cursor-pointer text-noir hover:text-bronze transition-colors"
+                onClick={() => setMobileOpen((o) => !o)}
+                aria-label="Menu"
+              >
+                {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+              </button>
             </div>
           </div>
 
-          {/* Desktop sub-nav */}
-          <nav className="hidden md:flex items-center justify-center gap-8 pb-3 -mt-1">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={`sub-${link.key}`}
-                href={`/${locale}${link.href}`}
-                className={`font-dm text-[11px] tracking-[0.2em] uppercase transition-colors duration-200 hover:text-bronze ${
-                  link.key === "soldes" ? "text-promo" : "text-grege"
-                }`}
-              >
-                {t(link.key as Parameters<typeof t>[0])}
-              </Link>
-            ))}
-          </nav>
         </div>
       </header>
 
