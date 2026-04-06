@@ -78,7 +78,7 @@ export default async function AdminProductsPage({
               {/* Mobile cards */}
               <div className="md:hidden space-y-3">
                 {group.products.map((p) => {
-                  const cover = p.images?.find((i) => i.is_cover) ?? p.images?.[0];
+                  const cover = p.images?.find((i: { url: string; is_cover: boolean }) => i.is_cover) ?? p.images?.[0];
                   return (
                     <div key={p.id} className="bg-white rounded-2xl shadow-warm p-4 flex items-center gap-4">
                       <div className="relative w-14 h-20 rounded-xl overflow-hidden bg-beige flex-shrink-0">
@@ -132,7 +132,7 @@ export default async function AdminProductsPage({
                   </thead>
                   <tbody>
                     {group.products.map((p) => {
-                      const cover = p.images?.find((i) => i.is_cover) ?? p.images?.[0];
+                      const cover = p.images?.find((i: { url: string; is_cover: boolean }) => i.is_cover) ?? p.images?.[0];
                       return (
                         <tr key={p.id} className="border-b border-beige/50 hover:bg-background transition-colors">
                           <td className="py-3 px-4">
