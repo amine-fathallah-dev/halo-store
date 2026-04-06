@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { createAdminClient } from "@/lib/supabase/server";
 
 interface ProductPayload {
@@ -62,6 +63,8 @@ export async function saveProduct(
   if (images.length > 0) {
     await supabase.from("product_images").insert(images.map((img) => ({ ...img, product_id: pid })));
   }
+
+  revalidatePath("/", "layout");
 
   return { error: null, id: pid };
 }

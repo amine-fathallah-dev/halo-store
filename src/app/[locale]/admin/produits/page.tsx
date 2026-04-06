@@ -19,6 +19,7 @@ interface ProductRow {
   category?: { id: string; name_fr: string; display_order: number };
 }
 
+export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Admin — Produits" };
 
 export default async function AdminProductsPage({

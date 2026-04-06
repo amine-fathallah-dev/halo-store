@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { createAdminClient } from "@/lib/supabase/server";
 
 interface BlogPayload {
@@ -19,10 +20,12 @@ export async function saveBlogPost(payload: BlogPayload, postId?: string) {
   if (postId) {
     const { error } = await supabase.from("blog_posts").update(payload).eq("id", postId);
     if (error) return { error: error.message };
+    revalidatePath("/", "layout");
     return { error: null };
   } else {
     const { data, error } = await supabase.from("blog_posts").insert(payload).select().single();
     if (error) return { error: error.message };
+    revalidatePath("/", "layout");
     return { error: null, id: data.id };
   }
 }

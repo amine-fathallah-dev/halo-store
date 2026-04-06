@@ -5,6 +5,7 @@ import { Eye } from "lucide-react";
 import type { Order, OrderStatus } from "@/types";
 import { ORDER_STATUS_LABELS } from "@/types";
 
+export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Admin — Commandes" };
 
 const STATUS_COLORS: Record<OrderStatus, string> = {

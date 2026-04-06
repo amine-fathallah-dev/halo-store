@@ -7,6 +7,7 @@ import ProductForm from "@/components/admin/ProductForm";
 import type { Category } from "@/types";
 import type { UploadedImage } from "@/components/admin/ImageUpload";
 
+export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Admin — Modifier produit" };
 
 export default async function EditProductPage({

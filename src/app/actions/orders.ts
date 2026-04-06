@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { createAdminClient } from "@/lib/supabase/server";
 import type { OrderStatus } from "@/types";
 
@@ -19,6 +20,7 @@ export async function updateOrderStatus(orderId: string, newStatus: OrderStatus)
     changed_by: "admin",
   });
 
+  revalidatePath("/", "layout");
   return { error: null };
 }
 
@@ -30,5 +32,6 @@ export async function updateOrderNotes(orderId: string, notes: string) {
     .eq("id", orderId);
 
   if (error) return { error: error.message };
+  revalidatePath("/", "layout");
   return { error: null };
 }

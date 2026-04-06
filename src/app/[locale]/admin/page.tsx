@@ -1,5 +1,5 @@
 import { createAdminClient } from "@/lib/supabase/server";
-import { Package, ShoppingCart, Clock, TrendingUp, CheckCircle, Truck, XCircle, Eye } from "lucide-react";
+import { Package, ShoppingCart, Clock, TrendingUp, Eye } from "lucide-react";
 import type { Metadata } from "next";
 import type { OrderStatus } from "@/types";
 import { ORDER_STATUS_LABELS } from "@/types";
@@ -15,6 +15,7 @@ interface OrderRow {
   created_at: string;
 }
 
+export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Admin — Dashboard" };
 
 const STATUS_COLORS: Record<OrderStatus, string> = {
@@ -73,54 +74,54 @@ export default async function AdminDashboard({
 
   return (
     <div className="pt-6">
-      <h1 className="font-cormorant text-3xl text-noir mb-8">Dashboard</h1>
+      <h1 className="font-cormorant text-3xl text-noir mb-6">Dashboard</h1>
 
-      {/* Top stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white rounded-2xl p-5 shadow-warm">
-          <div className="flex items-center justify-between mb-3">
-            <p className="font-dm text-xs tracking-widest uppercase text-grege">Commandes</p>
-            <ShoppingCart size={18} className="text-bronze" />
+      {/* Top stats — 2 cols mobile, 4 cols desktop */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+        <div className="bg-white rounded-2xl p-4 shadow-warm">
+          <div className="flex items-center justify-between mb-2">
+            <p className="font-dm text-[10px] tracking-widest uppercase text-grege leading-tight">Commandes</p>
+            <ShoppingCart size={16} className="text-bronze flex-shrink-0" />
           </div>
           <p className="font-cormorant text-4xl text-noir">{totalOrders}</p>
-          <p className="font-dm text-xs text-grege mt-1">{todayOrders ?? 0} aujourd&apos;hui</p>
+          <p className="font-dm text-xs text-grege mt-1">{todayOrders ?? 0} auj.</p>
         </div>
 
-        <div className="bg-white rounded-2xl p-5 shadow-warm">
-          <div className="flex items-center justify-between mb-3">
-            <p className="font-dm text-xs tracking-widest uppercase text-grege">En attente</p>
-            <Clock size={18} className="text-promo" />
+        <div className="bg-white rounded-2xl p-4 shadow-warm">
+          <div className="flex items-center justify-between mb-2">
+            <p className="font-dm text-[10px] tracking-widest uppercase text-grege leading-tight">En attente</p>
+            <Clock size={16} className="text-promo flex-shrink-0" />
           </div>
           <p className="font-cormorant text-4xl text-noir">{pendingOrders}</p>
           <p className="font-dm text-xs text-grege mt-1">{confirmedOrders} confirmées</p>
         </div>
 
-        <div className="bg-white rounded-2xl p-5 shadow-warm">
-          <div className="flex items-center justify-between mb-3">
-            <p className="font-dm text-xs tracking-widest uppercase text-grege">Produits actifs</p>
-            <Package size={18} className="text-bronze" />
+        <div className="bg-white rounded-2xl p-4 shadow-warm">
+          <div className="flex items-center justify-between mb-2">
+            <p className="font-dm text-[10px] tracking-widest uppercase text-grege leading-tight">Produits</p>
+            <Package size={16} className="text-bronze flex-shrink-0" />
           </div>
           <p className="font-cormorant text-4xl text-noir">{totalProducts ?? 0}</p>
-          <p className="font-dm text-xs text-grege mt-1">&nbsp;</p>
+          <p className="font-dm text-xs text-grege mt-1">actifs</p>
         </div>
 
-        <div className="bg-white rounded-2xl p-5 shadow-warm">
-          <div className="flex items-center justify-between mb-3">
-            <p className="font-dm text-xs tracking-widest uppercase text-grege">CA livré</p>
-            <TrendingUp size={18} className="text-bronze" />
+        <div className="bg-white rounded-2xl p-4 shadow-warm">
+          <div className="flex items-center justify-between mb-2">
+            <p className="font-dm text-[10px] tracking-widest uppercase text-grege leading-tight">CA livré</p>
+            <TrendingUp size={16} className="text-bronze flex-shrink-0" />
           </div>
-          <p className="font-cormorant text-3xl text-bronze">{deliveredRevenue.toFixed(3)}</p>
-          <p className="font-dm text-xs text-grege mt-1">DT confirmés</p>
+          <p className="font-cormorant text-2xl text-bronze leading-tight">{deliveredRevenue.toFixed(0)}</p>
+          <p className="font-dm text-xs text-grege mt-1">DT</p>
         </div>
       </div>
 
       {/* Revenue + status breakdown */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
-        {/* CA total card */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+        {/* CA total */}
         <div className="bg-white rounded-2xl p-5 shadow-warm flex flex-col justify-between">
           <div>
             <p className="font-dm text-xs tracking-widest uppercase text-grege mb-1">CA total (hors annulées)</p>
-            <p className="font-cormorant text-5xl text-noir mt-2">{totalRevenue.toFixed(3)}</p>
+            <p className="font-cormorant text-4xl text-noir mt-2">{totalRevenue.toFixed(3)}</p>
             <p className="font-dm text-sm text-grege">DT</p>
           </div>
           <div className="mt-4 pt-4 border-t border-beige grid grid-cols-2 gap-2">
@@ -139,25 +140,25 @@ export default async function AdminDashboard({
         <div className="lg:col-span-2 bg-white rounded-2xl p-5 shadow-warm">
           <p className="font-dm text-xs tracking-widest uppercase text-grege mb-4">Répartition par statut</p>
           <div className="space-y-3">
-            {[
-              { status: "en_attente" as OrderStatus, count: pendingOrders, icon: Clock },
-              { status: "confirmee" as OrderStatus, count: confirmedOrders, icon: CheckCircle },
-              { status: "en_preparation" as OrderStatus, count: inPreparationOrders, icon: Package },
-              { status: "expediee" as OrderStatus, count: shippedOrders, icon: Truck },
-              { status: "livree" as OrderStatus, count: deliveredOrders, icon: CheckCircle },
-              { status: "annulee" as OrderStatus, count: cancelledOrders, icon: XCircle },
-            ].map(({ status, count, icon: Icon }) => (
-              <div key={status} className="flex items-center gap-3">
-                <span className={`px-2 py-0.5 rounded-full text-xs font-dm w-32 text-center ${STATUS_COLORS[status]}`}>
+            {([
+              { status: "en_attente" as OrderStatus, count: pendingOrders },
+              { status: "confirmee" as OrderStatus, count: confirmedOrders },
+              { status: "en_preparation" as OrderStatus, count: inPreparationOrders },
+              { status: "expediee" as OrderStatus, count: shippedOrders },
+              { status: "livree" as OrderStatus, count: deliveredOrders },
+              { status: "annulee" as OrderStatus, count: cancelledOrders },
+            ] as { status: OrderStatus; count: number }[]).map(({ status, count }) => (
+              <div key={status} className="flex items-center gap-2">
+                <span className={`px-2 py-0.5 rounded-full text-[10px] font-dm w-24 sm:w-28 text-center flex-shrink-0 ${STATUS_COLORS[status]}`}>
                   {ORDER_STATUS_LABELS[status]}
                 </span>
-                <div className="flex-1 bg-beige rounded-full h-2 overflow-hidden">
+                <div className="flex-1 bg-beige rounded-full h-1.5 overflow-hidden">
                   <div
                     className="h-full bg-bronze rounded-full transition-all"
                     style={{ width: totalOrders > 0 ? `${(count / totalOrders) * 100}%` : "0%" }}
                   />
                 </div>
-                <span className="font-dm text-sm text-noir w-6 text-right">{count}</span>
+                <span className="font-dm text-xs text-noir w-5 text-right flex-shrink-0">{count}</span>
               </div>
             ))}
           </div>
@@ -166,7 +167,7 @@ export default async function AdminDashboard({
 
       {/* Recent orders */}
       <div className="bg-white rounded-3xl shadow-warm overflow-hidden">
-        <div className="flex items-center justify-between p-6 border-b border-beige">
+        <div className="flex items-center justify-between p-5 border-b border-beige">
           <h2 className="font-cormorant text-2xl text-noir">Commandes récentes</h2>
           <Link
             href={`/${locale}/admin/commandes`}
@@ -175,51 +176,83 @@ export default async function AdminDashboard({
             Voir toutes
           </Link>
         </div>
+
         {(!recentOrders || recentOrders.length === 0) ? (
           <div className="p-10 text-center">
             <p className="font-dm text-sm text-grege">Aucune commande</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full font-dm text-sm">
-              <thead>
-                <tr className="border-b border-beige">
-                  {["#", "Client", "Gouvernorat", "Total", "Statut", "Date", ""].map((h) => (
-                    <th key={h} className="text-left py-3 px-4 text-xs text-grege uppercase tracking-widest font-normal whitespace-nowrap">
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {(recentOrders as OrderRow[]).map((order) => (
-                  <tr key={order.id} className="border-b border-beige/50 hover:bg-background transition-colors">
-                    <td className="py-3 px-4 text-bronze font-medium">#{order.order_number}</td>
-                    <td className="py-3 px-4 font-medium">{order.customer_name}</td>
-                    <td className="py-3 px-4 text-grege">{order.governorate}</td>
-                    <td className="py-3 px-4">{order.total.toFixed(3)} DT</td>
-                    <td className="py-3 px-4">
-                      <span className={`px-2 py-1 rounded-full text-xs ${STATUS_COLORS[order.status]}`}>
+          <>
+            {/* Mobile cards */}
+            <div className="md:hidden divide-y divide-beige/50">
+              {(recentOrders as OrderRow[]).map((order) => (
+                <div key={order.id} className="p-4 flex items-center gap-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-dm text-xs font-medium text-bronze">#{order.order_number}</span>
+                      <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-dm ${STATUS_COLORS[order.status]}`}>
                         {ORDER_STATUS_LABELS[order.status]}
                       </span>
-                    </td>
-                    <td className="py-3 px-4 text-grege whitespace-nowrap">
-                      {new Date(order.created_at).toLocaleDateString("fr-FR")}
-                    </td>
-                    <td className="py-3 px-4">
-                      <Link
-                        href={`/${locale}/admin/commandes/${order.id}`}
-                        className="text-grege hover:text-bronze transition-colors"
-                        aria-label="Voir"
-                      >
-                        <Eye size={15} />
-                      </Link>
-                    </td>
+                    </div>
+                    <p className="font-dm text-sm font-medium text-noir truncate">{order.customer_name}</p>
+                    <p className="font-dm text-xs text-grege">{order.governorate} · {new Date(order.created_at).toLocaleDateString("fr-FR")}</p>
+                  </div>
+                  <div className="flex items-center gap-3 flex-shrink-0">
+                    <p className="font-dm text-sm text-bronze">{order.total.toFixed(3)} DT</p>
+                    <Link
+                      href={`/${locale}/admin/commandes/${order.id}`}
+                      className="text-grege hover:text-bronze transition-colors"
+                      aria-label="Voir"
+                    >
+                      <Eye size={15} />
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop table */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full font-dm text-sm">
+                <thead>
+                  <tr className="border-b border-beige">
+                    {["#", "Client", "Gouvernorat", "Total", "Statut", "Date", ""].map((h) => (
+                      <th key={h} className="text-left py-3 px-4 text-xs text-grege uppercase tracking-widest font-normal whitespace-nowrap">
+                        {h}
+                      </th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {(recentOrders as OrderRow[]).map((order) => (
+                    <tr key={order.id} className="border-b border-beige/50 hover:bg-background transition-colors">
+                      <td className="py-3 px-4 text-bronze font-medium">#{order.order_number}</td>
+                      <td className="py-3 px-4 font-medium">{order.customer_name}</td>
+                      <td className="py-3 px-4 text-grege">{order.governorate}</td>
+                      <td className="py-3 px-4">{order.total.toFixed(3)} DT</td>
+                      <td className="py-3 px-4">
+                        <span className={`px-2 py-1 rounded-full text-xs ${STATUS_COLORS[order.status]}`}>
+                          {ORDER_STATUS_LABELS[order.status]}
+                        </span>
+                      </td>
+                      <td className="py-3 px-4 text-grege whitespace-nowrap">
+                        {new Date(order.created_at).toLocaleDateString("fr-FR")}
+                      </td>
+                      <td className="py-3 px-4">
+                        <Link
+                          href={`/${locale}/admin/commandes/${order.id}`}
+                          className="text-grege hover:text-bronze transition-colors"
+                          aria-label="Voir"
+                        >
+                          <Eye size={15} />
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
     </div>

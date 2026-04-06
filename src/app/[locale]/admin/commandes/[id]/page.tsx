@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase/server";
 import OrderDetailClient from "@/components/admin/OrderDetailClient";
 import type { Order } from "@/types";
 
+export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Admin — Commande" };
 
 export default async function OrderDetailPage({

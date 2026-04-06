@@ -6,6 +6,7 @@ import { createAdminClient } from "@/lib/supabase/server";
 import BlogForm from "@/components/admin/BlogForm";
 import type { UploadedImage } from "@/components/admin/ImageUpload";
 
+export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Admin — Modifier article" };
 
 export default async function EditBlogPage({

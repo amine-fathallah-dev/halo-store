@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase/server";
 import { Plus, Pencil } from "lucide-react";
 import type { BlogPost } from "@/types";
 
+export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Admin — Blog" };
 
 export default async function AdminBlogPage({

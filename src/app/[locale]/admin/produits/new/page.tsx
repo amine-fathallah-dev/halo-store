@@ -5,6 +5,7 @@ import { createAdminClient } from "@/lib/supabase/server";
 import ProductForm from "@/components/admin/ProductForm";
 import type { Category } from "@/types";
 
+export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Admin — Nouveau produit" };
 
 export default async function NewProductPage({
