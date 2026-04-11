@@ -385,7 +385,7 @@ export default function ProductForm({
 
         {/* Variants */}
         <div className="bg-white rounded-3xl p-6 md:p-8 shadow-warm">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
             <h2 className="font-cormorant text-2xl text-noir">Variantes</h2>
             <button
               type="button"
@@ -393,7 +393,7 @@ export default function ProductForm({
               className="flex items-center gap-2 font-dm text-sm text-bronze hover:text-noir transition-colors cursor-pointer border border-bronze/30 hover:border-bronze px-3 py-2 rounded-xl"
             >
               <Plus size={14} />
-              Ajouter une variante
+              <span>Ajouter une variante</span>
             </button>
           </div>
 
@@ -405,7 +405,7 @@ export default function ProductForm({
           )}
 
           <div className="space-y-3">
-            {/* Header */}
+            {/* Desktop header */}
             <div className={`hidden md:grid gap-3 ${isAccessoire ? "grid-cols-[1fr_80px_1fr_40px]" : "grid-cols-[120px_1fr_80px_1fr_40px]"}`}>
               {(isAccessoire ? ["Couleur", "Stock", "SKU", ""] : ["Taille", "Couleur", "Stock", "SKU", ""]).map((h) => (
                 <p key={h} className="font-dm text-xs uppercase tracking-widest text-grege">{h}</p>
@@ -413,52 +413,119 @@ export default function ProductForm({
             </div>
 
             {variants.map((v, i) => (
-              <div key={i} className={`grid gap-3 items-center p-3 bg-background rounded-2xl ${isAccessoire ? "grid-cols-2 md:grid-cols-[1fr_80px_1fr_40px]" : "grid-cols-2 md:grid-cols-[120px_1fr_80px_1fr_40px]"}`}>
-                {!isAccessoire && (
-                <select
-                  value={v.size}
-                  onChange={(e) => updateVariant(i, "size", e.target.value)}
-                  className="input-field py-2 text-sm"
-                  aria-label="Taille"
-                >
-                  {availableSizes.map((s) => (
-                    <option key={s} value={s}>{s}</option>
-                  ))}
-                </select>
-                )}
-                <input
-                  type="text"
-                  value={v.color}
-                  onChange={(e) => updateVariant(i, "color", e.target.value)}
-                  className="input-field py-2 text-sm"
-                  placeholder="Ex: Noir, Blanc..."
-                  aria-label="Couleur"
-                />
-                <input
-                  type="number"
-                  min="0"
-                  value={v.stock}
-                  onChange={(e) => updateVariant(i, "stock", parseInt(e.target.value) || 0)}
-                  className="input-field py-2 text-sm"
-                  aria-label="Stock"
-                />
-                <input
-                  type="text"
-                  value={v.sku}
-                  onChange={(e) => updateVariant(i, "sku", e.target.value)}
-                  className="input-field py-2 text-sm font-mono"
-                  placeholder="Auto"
-                  aria-label="SKU"
-                />
-                <button
-                  type="button"
-                  onClick={() => removeVariant(i)}
-                  disabled={variants.length === 1}
-                  className="text-grege hover:text-promo transition-colors cursor-pointer disabled:opacity-30 p-2 flex items-center justify-center"
-                  aria-label="Supprimer la variante"
-                >
-                  <Trash2 size={14} />
-                </button>
+              <div key={i} className="bg-background rounded-2xl p-3">
+                {/* Mobile layout */}
+                <div className="md:hidden">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="font-dm text-xs text-grege uppercase tracking-widest">
+                      Variante {i + 1}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => removeVariant(i)}
+                      disabled={variants.length === 1}
+                      className="text-grege hover:text-promo transition-colors cursor-pointer disabled:opacity-30 p-1"
+                      aria-label="Supprimer la variante"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    {!isAccessoire && (
+                      <div>
+                        <label className="block font-dm text-xs text-grege mb-1">Taille</label>
+                        <select
+                          value={v.size}
+                          onChange={(e) => updateVariant(i, "size", e.target.value)}
+                          className="input-field py-2 text-sm"
+                        >
+                          {availableSizes.map((s) => (
+                            <option key={s} value={s}>{s}</option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+                    <div>
+                      <label className="block font-dm text-xs text-grege mb-1">Couleur</label>
+                      <input
+                        type="text"
+                        value={v.color}
+                        onChange={(e) => updateVariant(i, "color", e.target.value)}
+                        className="input-field py-2 text-sm"
+                        placeholder="Ex: Noir..."
+                      />
+                    </div>
+                    <div>
+                      <label className="block font-dm text-xs text-grege mb-1">Stock</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={v.stock}
+                        onChange={(e) => updateVariant(i, "stock", parseInt(e.target.value) || 0)}
+                        className="input-field py-2 text-sm"
+                      />
+                    </div>
+                    <div className={isAccessoire ? "" : "col-span-2"}>
+                      <label className="block font-dm text-xs text-grege mb-1">SKU</label>
+                      <input
+                        type="text"
+                        value={v.sku}
+                        onChange={(e) => updateVariant(i, "sku", e.target.value)}
+                        className="input-field py-2 text-sm font-mono"
+                        placeholder="Auto"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Desktop layout */}
+                <div className={`hidden md:grid gap-3 items-center ${isAccessoire ? "grid-cols-[1fr_80px_1fr_40px]" : "grid-cols-[120px_1fr_80px_1fr_40px]"}`}>
+                  {!isAccessoire && (
+                    <select
+                      value={v.size}
+                      onChange={(e) => updateVariant(i, "size", e.target.value)}
+                      className="input-field py-2 text-sm"
+                      aria-label="Taille"
+                    >
+                      {availableSizes.map((s) => (
+                        <option key={s} value={s}>{s}</option>
+                      ))}
+                    </select>
+                  )}
+                  <input
+                    type="text"
+                    value={v.color}
+                    onChange={(e) => updateVariant(i, "color", e.target.value)}
+                    className="input-field py-2 text-sm"
+                    placeholder="Ex: Noir, Blanc..."
+                    aria-label="Couleur"
+                  />
+                  <input
+                    type="number"
+                    min="0"
+                    value={v.stock}
+                    onChange={(e) => updateVariant(i, "stock", parseInt(e.target.value) || 0)}
+                    className="input-field py-2 text-sm"
+                    aria-label="Stock"
+                  />
+                  <input
+                    type="text"
+                    value={v.sku}
+                    onChange={(e) => updateVariant(i, "sku", e.target.value)}
+                    className="input-field py-2 text-sm font-mono"
+                    placeholder="Auto"
+                    aria-label="SKU"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeVariant(i)}
+                    disabled={variants.length === 1}
+                    className="text-grege hover:text-promo transition-colors cursor-pointer disabled:opacity-30 p-2 flex items-center justify-center"
+                    aria-label="Supprimer la variante"
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                </div>
               </div>
             ))}
           </div>

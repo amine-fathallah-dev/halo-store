@@ -1,29 +1,35 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
+import { getProductBySlug, getSimilarProducts } from "@/lib/queries";
 import ProductDetail from "@/components/shop/ProductDetail";
 import type { Product } from "@/types";
+
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const supabase = createAdminClient();
+  const { data } = await supabase
+    .from("products")
+    .select("slug")
+    .eq("is_active", true);
+
+  const locales = ["fr", "en"];
+  return (data ?? []).flatMap((p) =>
+    locales.map((locale) => ({ locale, slug: p.slug }))
+  );
+}
 
 export async function generateMetadata({
   params: { locale, slug },
 }: {
   params: { locale: string; slug: string };
 }): Promise<Metadata> {
-  const supabase = await createClient();
-  const { data } = await supabase
-    .from("products")
-    .select("name_fr, name_en, description_fr, description_en")
-    .eq("slug", slug)
-    .single();
-
-  if (!data) return {};
-
-  const name = locale === "fr" ? data.name_fr : data.name_en;
-  const description = locale === "fr" ? data.description_fr : data.description_en;
-
+  const product = await getProductBySlug(slug);
+  if (!product) return {};
   return {
-    title: name,
-    description,
+    title: locale === "fr" ? product.name_fr : product.name_en,
+    description: locale === "fr" ? product.description_fr : product.description_en,
   };
 }
 
@@ -32,30 +38,15 @@ export default async function ProductPage({
 }: {
   params: { locale: string; slug: string };
 }) {
-  const supabase = await createClient();
-
-  const { data: product } = await supabase
-    .from("products")
-    .select("*, images:product_images(*), variants:product_variants(*), category:categories(*)")
-    .eq("slug", slug)
-    .eq("is_active", true)
-    .single();
-
+  const product = await getProductBySlug(slug);
   if (!product) notFound();
 
-  // Similar products
-  const { data: similar } = await supabase
-    .from("products")
-    .select("*, images:product_images(*), variants:product_variants(*)")
-    .eq("category_id", product.category_id)
-    .eq("is_active", true)
-    .neq("id", product.id)
-    .limit(4);
+  const similar = await getSimilarProducts(product.category_id, product.id);
 
   return (
     <ProductDetail
       product={product as Product}
-      similar={(similar as Product[]) ?? []}
+      similar={similar as Product[]}
       locale={locale}
     />
   );

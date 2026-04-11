@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { createAdminClient } from "@/lib/supabase/server";
 import { Plus, Pencil } from "lucide-react";
+import DeleteProductButton from "@/components/admin/DeleteProductButton";
 
 interface ProductRow {
   id: string;
@@ -105,13 +106,16 @@ export default async function AdminProductsPage({
                         }`}>
                           {p.is_active ? "Actif" : "Archivé"}
                         </span>
-                        <Link
-                          href={`/${locale}/admin/produits/${p.id}/modifier`}
-                          className="text-grege hover:text-bronze transition-colors cursor-pointer"
-                          aria-label="Modifier"
-                        >
-                          <Pencil size={16} />
-                        </Link>
+                        <div className="flex items-center gap-1">
+                          <Link
+                            href={`/${locale}/admin/produits/${p.id}/modifier`}
+                            className="text-grege hover:text-bronze transition-colors cursor-pointer p-1"
+                            aria-label="Modifier"
+                          >
+                            <Pencil size={16} />
+                          </Link>
+                          <DeleteProductButton productId={p.id} productName={p.name_fr} />
+                        </div>
                       </div>
                     </div>
                   );
@@ -169,13 +173,16 @@ export default async function AdminProductsPage({
                             </span>
                           </td>
                           <td className="py-3 px-4">
-                            <Link
-                              href={`/${locale}/admin/produits/${p.id}/modifier`}
-                              className="text-grege hover:text-bronze transition-colors cursor-pointer"
-                              aria-label="Modifier"
-                            >
-                              <Pencil size={16} />
-                            </Link>
+                            <div className="flex items-center gap-1">
+                              <Link
+                                href={`/${locale}/admin/produits/${p.id}/modifier`}
+                                className="text-grege hover:text-bronze transition-colors cursor-pointer p-1"
+                                aria-label="Modifier"
+                              >
+                                <Pencil size={16} />
+                              </Link>
+                              <DeleteProductButton productId={p.id} productName={p.name_fr} />
+                            </div>
                           </td>
                         </tr>
                       );

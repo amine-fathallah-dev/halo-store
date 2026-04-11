@@ -54,7 +54,7 @@ export default async function Footer({ locale }: { locale: string }) {
                 { label: tNav("robes"), href: "/category/robes" },
                 { label: tNav("tops"), href: "/category/tops" },
                 { label: tNav("pantalons"), href: "/category/pantalons" },
-                { label: tNav("vestes"), href: "/category/vestes" },
+                { label: tNav("foulards"), href: "/category/foulards" },
                 { label: tNav("accessoires"), href: "/category/accessoires" },
                 { label: tNav("soldes"), href: "/soldes" },
                 { label: tNav("blog"), href: "/blog" },
@@ -141,7 +141,7 @@ export default async function Footer({ locale }: { locale: string }) {
 
         {/* Bottom */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="font-dm text-xs text-white/40">{t("copyright")}</p>
+          <p className="font-dm text-xs text-white/40">© {new Date().getFullYear()} HALO. Tous droits réservés.</p>
           <div className="flex items-center gap-4">
             <Link
               href={`/fr`}

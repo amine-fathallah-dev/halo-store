@@ -1,22 +1,19 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { createClient } from "@/lib/supabase/server";
+import { getProducts, getCategories } from "@/lib/queries";
 import ShopClient from "@/components/shop/ShopClient";
 import type { Product, Category } from "@/types";
+
+export const revalidate = 3600;
 
 export async function generateMetadata({
   params: { locale, slug },
 }: {
   params: { locale: string; slug: string };
 }): Promise<Metadata> {
-  const supabase = await createClient();
-  const { data } = await supabase
-    .from("categories")
-    .select("name_fr, name_en")
-    .eq("slug", slug)
-    .single();
-
-  const name = data ? (locale === "fr" ? data.name_fr : data.name_en) : slug;
+  const categories = await getCategories();
+  const cat = categories.find((c: Category) => c.slug === slug);
+  const name = cat ? (locale === "fr" ? cat.name_fr : cat.name_en) : slug;
   return { title: name };
 }
 
@@ -27,27 +24,22 @@ export default async function CategoryPage({
   params: { locale: string; slug: string };
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const supabase = await createClient();
-
-  const [{ data: category }, { data: products }, { data: categories }] = await Promise.all([
-    supabase.from("categories").select("*").eq("slug", slug).single(),
-    supabase
-      .from("products")
-      .select("*, images:product_images(*), variants:product_variants(*), category:categories(*)")
-      .eq("is_active", true)
-      .eq("category_id",
-        (await supabase.from("categories").select("id").eq("slug", slug).single()).data?.id ?? ""
-      )
-      .order("created_at", { ascending: false }),
-    supabase.from("categories").select("*").order("display_order"),
+  const [products, categories] = await Promise.all([
+    getProducts(),
+    getCategories(),
   ]);
 
+  const category = (categories as Category[]).find((c) => c.slug === slug);
   if (!category) notFound();
+
+  const categoryProducts = (products as Product[]).filter(
+    (p) => p.category?.id === category.id || (p as Product & { category_id: string }).category_id === category.id
+  );
 
   return (
     <ShopClient
-      products={(products as Product[]) ?? []}
-      categories={(categories as Category[]) ?? []}
+      products={categoryProducts}
+      categories={categories as Category[]}
       locale={locale}
       searchParams={{ ...searchParams, category: slug }}
     />

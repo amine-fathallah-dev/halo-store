@@ -23,6 +23,10 @@ export const metadata: Metadata = {
   },
   description: "Collections femme et accessoires haut de gamme. Livraison en Tunisie — 8 DT. Cash à la livraison.",
   keywords: ["mode femme", "vêtements tunisie", "accessoires", "robes", "halo"],
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({

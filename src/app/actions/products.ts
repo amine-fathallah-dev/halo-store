@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { createAdminClient } from "@/lib/supabase/server";
 
 interface ProductPayload {
@@ -65,6 +65,21 @@ export async function saveProduct(
   }
 
   revalidatePath("/", "layout");
+  revalidateTag("products");
 
   return { error: null, id: pid };
+}
+
+export async function deleteProduct(productId: string) {
+  const supabase = createAdminClient();
+
+  await supabase.from("product_variants").delete().eq("product_id", productId);
+  await supabase.from("product_images").delete().eq("product_id", productId);
+
+  const { error } = await supabase.from("products").delete().eq("id", productId);
+  if (error) return { error: error.message };
+
+  revalidatePath("/", "layout");
+  revalidateTag("products");
+  return { error: null };
 }
